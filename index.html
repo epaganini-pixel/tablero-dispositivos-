@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero de dispositivos</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ro">
+<header class="top">
+  <h1>Dispositivos de Ingeniería</h1>
+  <input id="q" type="search" placeholder="Buscar por nombre, código, pieza o descripción">
+  <select id="fEstado" aria-label="Filtrar por estado"></select>
+  <button id="nuevo" class="primary">+ Nuevo dispositivo</button>
+  <button id="sesion">Iniciar sesión para editar</button>
+</header>
+<nav id="chips" class="chips" aria-label="Filtrar por proceso"></nav>
+<main id="board" class="board"></main>
+
+<dialog id="detail"></dialog>
+
+<dialog id="edit">
+  <form id="editForm" class="box">
+    <h2 id="editTitle"></h2>
+    <label>Nombre del dispositivo<input name="nombre" required></label>
+    <label>Código del dispositivo<input name="codigo" required></label>
+    <div class="row2">
+      <label>Proceso involucrado<select name="proceso"></select></label>
+      <label>Estado<select name="estado"></select></label>
+    </div>
+    <label>Descripción<textarea name="descripcion" rows="3"></textarea></label>
+    <label>Imagen<input type="file" id="imgFile" accept="image/*"></label>
+    <div id="imgPrev" class="imgprev"></div>
+    <div class="actions">
+      <button type="button" id="cancelEdit">Cancelar</button>
+      <button class="primary">Guardar</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="login">
+  <form id="loginForm" class="box">
+    <h2>Iniciar sesión</h2>
+    <label>Email<input name="email" type="email" required></label>
+    <label>Contraseña<input name="pass" type="password" required></label>
+    <p id="loginErr" class="err"></p>
+    <div class="actions"><button type="button" id="cancelLogin">Cancelar</button><button class="primary">Entrar</button></div>
+  </form>
+</dialog>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
