@@ -74,3 +74,28 @@ button.primary{color:var(--ink);font-weight:600}
 .err{color:#c0392b;font-size:13px;margin:0;min-height:1em}
 .ro #nuevo,.ro .add,.ro .edit,.ro #pzForm,.ro #detail .actions,.ro .pz .x{display:none}
 .ro .card{cursor:pointer}
+
+/* ===== Tamaño más grande y contenido centrado (similar a Panel de Corte) ===== */
+body{font-size:17px}
+.top,.chips,.board{width:100%;max-width:1600px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.top{margin-bottom:8px;padding-top:20px;padding-bottom:16px;gap:12px}
+.top h1{font-size:26px;margin-right:14px}
+button,input,select,textarea{font-size:15px}
+button{padding:9px 16px}
+.top input,.top select{padding:10px 12px}
+.chips{padding-top:8px;padding-bottom:16px;gap:8px}
+.chips button{font-size:15px;padding:6px 18px}
+.board{padding-bottom:28px;gap:18px}
+.col{flex:1 1 0;min-width:270px;max-width:none;padding:14px}
+.col h2{font-size:18px}
+.col header span{font-size:14px}
+.cards{gap:12px}
+.card{padding:14px}
+.card h3{font-size:18px}
+.card img{height:150px}
+.meta,.desc,.prog{font-size:15px}
+.tag{font-size:13px}
+.bar{height:10px}
+dialog{width:min(760px,94vw)}
+.box{padding:22px 26px;gap:12px}
+.box h2{font-size:24px}
