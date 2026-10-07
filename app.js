@@ -50,13 +50,15 @@ const Board = {
   },
   card(d) {
     const a = Calc.avance(d);
+    const img = d.imagen ? `<img class="card-img" src="${d.imagen}" alt="">` : '<div class="card-img-empty">sin foto</div>';
     return `<article class="card" draggable="true" data-id="${d.id}">
-      ${d.imagen ? `<img src="${d.imagen}" alt="">` : ''}
-      <h3>${esc(d.nombre)}</h3>
-      <p class="meta">Código: ${esc(d.codigo)} <span class="tag">${esc(d.proceso)}</span></p>
+      <div class="card-top">${img}
+        <div class="card-info"><div class="card-code mono">${esc(d.nombre)}</div>
+          <div class="card-meta"><span>Código: ${esc(d.codigo)}</span><span class="badge">${esc(d.proceso)}</span></div></div></div>
       ${d.descripcion ? `<p class="desc">${esc(d.descripcion)}</p>` : ''}
-      ${a.req ? `<div class="prog"><span>Piezas ${a.ready}/${a.req}</span><b>${fmt(a.pct)}%</b></div>${bar(a)}`
-              : '<div class="prog"><span>Sin piezas cargadas</span></div>'}
+      <div class="progress-row">${a.req
+        ? `<div class="prog"><span>${a.ready}/${a.req} piezas listas</span><span>${fmt(a.pct)}%</span></div>${bar(a)}`
+        : '<div class="prog"><span>Sin piezas cargadas</span></div>'}</div>
       <button class="edit" data-edit="${d.id}" title="Editar" aria-label="Editar">✎</button>
     </article>`;
   },
@@ -64,7 +66,7 @@ const Board = {
     $('#board').innerHTML = ESTADOS.map((e, i) => {
       const list = devices.filter(d => d.estado === e && this.visible(d));
       return `<section class="col c${i}" data-estado="${e}">
-        <header><h2>${e}</h2><span>${list.length} dispositivo${list.length === 1 ? '' : 's'}</span></header>
+        <header><h2><span class="dot"></span>${e}</h2><span class="col-count">${list.length} dispositivo${list.length === 1 ? '' : 's'}</span></header>
         <div class="cards">${list.map(this.card).join('') || '<p class="empty">Sin dispositivos</p>'}</div>
         <button class="add" data-add="${e}">+ Agregar tarjeta</button>
       </section>`;
