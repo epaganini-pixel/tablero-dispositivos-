@@ -27,6 +27,24 @@ const filters = { q: '', proceso: 'Todos', estado: 'Todos' };
 const find = id => devices.find(d => d.id === id);
 const commit = d => { if (d) Store.save(d); Board.render(); };
 
+/* ===== Copiar ubicación (carpeta del servidor) ===== */
+function copyText(t) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
+  return new Promise((ok, no) => {
+    const a = document.createElement('textarea');
+    a.value = t; a.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(a); a.select();
+    try { document.execCommand('copy') ? ok() : no(); } catch (e) { no(e); }
+    a.remove();
+  });
+}
+function copyLoc(btn, d) {
+  if (!d || !d.ubicacion) return;
+  const old = btn.textContent;
+  copyText(d.ubicacion).then(() => { btn.textContent = '✓ Copiado'; })
+    .catch(() => prompt('Copiá la ubicación (Ctrl+C):', d.ubicacion));
+  setTimeout(() => { btn.textContent = old; }, 1600);
+}
+
 /* ===== Calc: avance según cantidades ===== */
 const Calc = {
   avance(d) {
@@ -45,7 +63,7 @@ const Board = {
     if (filters.estado !== 'Todos' && d.estado !== filters.estado) return false;
     const q = filters.q.trim().toLowerCase();
     if (!q) return true;
-    return [d.nombre, d.codigo, d.descripcion, ...d.piezas.flatMap(p => [p.codigo, p.descripcion])]
+    return [d.nombre, d.codigo, d.descripcion, d.ubicacion, ...d.piezas.flatMap(p => [p.codigo, p.descripcion])]
       .some(t => String(t || '').toLowerCase().includes(q));
   },
   card(d) {
@@ -59,6 +77,7 @@ const Board = {
       <div class="progress-row">${a.req
         ? `<div class="prog"><span>${a.ready}/${a.req} piezas listas</span><span>${fmt(a.pct)}%</span></div>${bar(a)}`
         : '<div class="prog"><span>Sin piezas cargadas</span></div>'}</div>
+      ${d.ubicacion ? `<button class="loc" data-copy="${d.id}" title="${esc(d.ubicacion)}">📁 Copiar ubicación</button>` : ''}
       <button class="edit" data-edit="${d.id}" title="Editar" aria-label="Editar">✎</button>
     </article>`;
   },
@@ -75,8 +94,9 @@ const Board = {
   init() {
     const b = $('#board');
     b.addEventListener('click', ev => {
-      const ed = ev.target.closest('[data-edit]'), ad = ev.target.closest('[data-add]'), c = ev.target.closest('.card');
-      if (ed) Edit.open(ed.dataset.edit);
+      const ed = ev.target.closest('[data-edit]'), ad = ev.target.closest('[data-add]'), c = ev.target.closest('.card'), cp = ev.target.closest('[data-copy]');
+      if (cp) copyLoc(cp, find(cp.dataset.copy));
+      else if (ed) Edit.open(ed.dataset.edit);
       else if (ad) Edit.open(null, ad.dataset.add);
       else if (c) Detail.open(c.dataset.id);
     });
@@ -117,6 +137,7 @@ const Detail = {
       <div class="drow"><span>Código: <b>${esc(d.codigo)}</b></span><span class="tag">${esc(d.proceso)}</span>
         <label class="qty">Estado <select data-act="estado">${opts(ESTADOS, d.estado)}</select></label></div>
       ${d.descripcion ? `<p>${esc(d.descripcion)}</p>` : ''}
+      ${d.ubicacion ? `<div class="loc-row"><span class="mono">${esc(d.ubicacion)}</span><button data-act="copy">Copiar</button></div>` : ''}
       <h3 class="sec">Piezas${a.req ? ` — ${a.ready} de ${a.req} listas (${fmt(a.pct)}%)` : ''}</h3>
       ${a.req ? bar(a) : ''}
       <ul class="pzs">${d.piezas.map(p => {
@@ -146,6 +167,7 @@ const Detail = {
     dlg.addEventListener('click', ev => {
       const act = ev.target.closest('[data-act]')?.dataset.act, d = find(this.id);
       if (act === 'close') dlg.close();
+      else if (act === 'copy') copyLoc(ev.target.closest('[data-act]'), d);
       else if (act === 'edit') { dlg.close(); Edit.open(this.id); }
       else if (act === 'del') { d.piezas = d.piezas.filter(p => p !== pieza(ev.target)); apply(); }
       else if (act === 'delete' && confirm(`¿Eliminar "${d.nombre}"? Esta acción no se puede deshacer.`)) {
@@ -193,7 +215,7 @@ const Edit = {
     if (ro()) return;
     const d = id ? find(id) : null, f = $('#editForm');
     this.id = id; this.img = d?.imagen || '';
-    f.nombre.value = d?.nombre || ''; f.codigo.value = d?.codigo || ''; f.descripcion.value = d?.descripcion || '';
+    f.nombre.value = d?.nombre || ''; f.codigo.value = d?.codigo || ''; f.descripcion.value = d?.descripcion || ''; f.ubicacion.value = d?.ubicacion || '';
     f.proceso.innerHTML = opts(PROCESOS, d?.proceso);
     f.estado.innerHTML = opts(ESTADOS, d?.estado || estado || ESTADOS[0]);
     $('#imgFile').value = '';
@@ -213,7 +235,7 @@ const Edit = {
       e.preventDefault();
       const f = e.target;
       const data = { nombre: f.nombre.value.trim(), codigo: f.codigo.value.trim(), proceso: f.proceso.value,
-        estado: f.estado.value, descripcion: f.descripcion.value.trim(), imagen: this.img };
+        estado: f.estado.value, descripcion: f.descripcion.value.trim(), ubicacion: f.ubicacion.value.trim(), imagen: this.img };
       const d = this.id ? Object.assign(find(this.id), data) : { id: uid(), piezas: [], t: Date.now(), ...data };
       $('#edit').close(); commit(d);
     });
