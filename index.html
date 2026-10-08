@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tablero de dispositivos</title>
 <link rel="icon" href="logo.png">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body class="ro">
 <div class="wrap">
@@ -40,6 +40,7 @@
       <label>Estado<select name="estado"></select></label>
     </div>
     <label>Descripción<textarea name="descripcion" rows="3"></textarea></label>
+    <label>Ubicación (carpeta en el servidor)<input name="ubicacion" placeholder="H:\Procesos\...\W0020504"></label>
     <label>Imagen<input type="file" id="imgFile" accept="image/*"></label>
     <div id="imgPrev" class="imgprev"></div>
     <div class="actions">
@@ -61,7 +62,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="firebase-config.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
