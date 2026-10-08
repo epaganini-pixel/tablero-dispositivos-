@@ -96,3 +96,21 @@ h3.sec{margin:6px 0 0;font-size:12px;color:var(--muted);text-transform:uppercase
 .ro #nuevo,.ro .add,.ro .edit,.ro #pzForm,.ro #detail .actions,.ro .pz .x{display:none}
 .ro .card{cursor:pointer}
 @media(max-width:620px){body{padding:14px}#pzForm{grid-template-columns:1fr 1fr}.pz{grid-template-columns:auto 1fr auto}.st{display:none}}
+
+/* ===== Imagen grande en la tarjeta y esquinas más redondeadas ===== */
+.col{border-radius:20px}
+.card{border-radius:18px;padding:14px}
+.card-img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:var(--panel-alt);border:1px solid var(--border-soft);border-radius:14px;margin-bottom:12px}
+.card-img-empty{width:100%;height:90px;border-radius:14px;margin-bottom:12px;font-size:12px}
+.card-code{font-size:15px;padding-right:30px}
+.edit{top:22px;right:22px;border-radius:50%;background:#fff;box-shadow:var(--shadow)}
+.empty,.add,.bar{border-radius:12px}
+.bar{height:6px;border-radius:99px}
+.bar i{border-radius:99px}
+.badge,.tag{border-radius:99px}
+button{border-radius:10px}
+input,select,textarea{border-radius:10px}
+dialog{border-radius:20px}
+.pz{border-radius:12px}
+.dimg{max-height:340px;object-fit:contain;background:var(--panel-alt);border-radius:14px}
+.logo-badge{border-radius:12px}
