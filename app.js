@@ -52,9 +52,9 @@ const Board = {
     const a = Calc.avance(d);
     const img = d.imagen ? `<img class="card-img" src="${d.imagen}" alt="">` : '<div class="card-img-empty">sin foto</div>';
     return `<article class="card" draggable="true" data-id="${d.id}">
-      <div class="card-top">${img}
-        <div class="card-info"><div class="card-code mono">${esc(d.nombre)}</div>
-          <div class="card-meta"><span>Código: ${esc(d.codigo)}</span><span class="badge">${esc(d.proceso)}</span></div></div></div>
+      ${img}
+      <div class="card-code mono">${esc(d.nombre)}</div>
+      <div class="card-meta"><span>Código: ${esc(d.codigo)}</span><span class="badge">${esc(d.proceso)}</span></div>
       ${d.descripcion ? `<p class="desc">${esc(d.descripcion)}</p>` : ''}
       <div class="progress-row">${a.req
         ? `<div class="prog"><span>${a.ready}/${a.req} piezas listas</span><span>${fmt(a.pct)}%</span></div>${bar(a)}`
@@ -177,7 +177,7 @@ const shrink = file => new Promise(res => {
   r.onload = () => {
     const im = new Image();
     im.onload = () => {
-      const k = Math.min(1, 520 / Math.max(im.width, im.height)), c = document.createElement('canvas');
+      const k = Math.min(1, 720 / Math.max(im.width, im.height)), c = document.createElement('canvas');
       c.width = im.width * k; c.height = im.height * k;
       const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
       res(c.toDataURL('image/jpeg', .8));
