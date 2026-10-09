@@ -1,0 +1,62 @@
+/* ===== Efectos y movimiento (se puede quitar sacando fx.css y fx.js del index.html) ===== */
+body{background:radial-gradient(900px 520px at 88% -8%,rgba(255,175,15,.24),transparent 62%),radial-gradient(800px 600px at -8% 108%,rgba(86,120,163,.17),transparent 60%),var(--bg);background-attachment:fixed}
+#embers{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1}
+.spark{position:fixed;pointer-events:none;z-index:9999}
+
+/* encabezado */
+.top{position:relative;border-bottom:0}
+.top::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--brand),#ffe08a,var(--brand));background-size:200% 100%;animation:slide 5s linear infinite}
+.logo-badge{position:relative;animation:float 5s ease-in-out infinite}
+.logo-badge::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.7) 50%,transparent 65%);transform:translateX(-120%);animation:shine 5s ease-in-out infinite}
+
+/* botones y filtros */
+button{transition:transform .15s,box-shadow .2s,background .2s,border-color .2s,color .2s}
+button:active{transform:scale(.95)}
+button.primary{position:relative;overflow:hidden}
+button.primary::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%)}
+button.primary:hover{box-shadow:0 6px 18px rgba(255,175,15,.45)}
+button.primary:hover::after{transform:translateX(120%);transition:transform .6s}
+.chips button:hover{transform:translateY(-2px)}
+.chips button.on{box-shadow:0 4px 12px rgba(44,42,38,.25)}
+
+/* columnas */
+.col{background:rgba(255,255,255,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-color:rgba(255,255,255,.85);box-shadow:0 8px 30px rgba(40,35,25,.06);transition:box-shadow .25s,background .25s}
+.col>header{border-bottom-color:rgba(0,0,0,.05)}
+.dot{box-shadow:0 0 0 0 color-mix(in srgb,var(--cc) 55%,transparent);animation:pulse 2.6s infinite}
+body.dragging .col{outline:2px dashed color-mix(in srgb,var(--cc) 45%,transparent);outline-offset:-5px}
+.col.over{background:color-mix(in srgb,var(--cc) 14%,#fff);box-shadow:0 0 0 2px var(--cc),0 16px 40px color-mix(in srgb,var(--cc) 30%,transparent);outline:none}
+
+/* tarjetas */
+.card{transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ly,0px));transition:transform .15s ease-out,box-shadow .3s}
+.card:hover{--ly:-5px;box-shadow:0 14px 30px color-mix(in srgb,var(--cc) 28%,transparent),0 2px 6px rgba(40,35,25,.08)}
+.card::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,175,15,.16),transparent 60%)}
+.card:hover::after{opacity:1}
+.card.dragging{transform:rotate(2deg) scale(1.03);opacity:.5}
+.card.enter{animation:rise .6s cubic-bezier(.2,.8,.3,1) backwards;animation-delay:calc(var(--i,0)*60ms)}
+.card.land{animation:land .6s cubic-bezier(.3,1.5,.5,1)}
+
+/* barra de avance */
+.bar i{position:relative;overflow:hidden;background:linear-gradient(90deg,#6ea675,#8fcf95);transition:width .8s cubic-bezier(.2,.8,.3,1)}
+.bar i[style*="width:100%"]{background:linear-gradient(90deg,#f5a30a,#ffd36b)}
+.bar i::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);transform:translateX(-100%);animation:shimmer 2.8s infinite}
+.card.enter .bar i{animation:grow 1s cubic-bezier(.2,.8,.3,1) backwards;animation-delay:calc(var(--i,0)*60ms + .25s)}
+
+/* ventanas y piezas */
+dialog[open]{animation:dlgIn .32s cubic-bezier(.2,.9,.3,1.12)}
+dialog::backdrop{background:rgba(44,42,38,.4);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:fade .3s}
+.pz{transition:background .3s,border-color .3s}
+.pz.pop{animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+
+@keyframes slide{to{background-position:-200% 0}}
+@keyframes float{50%{transform:translateY(-3px)}}
+@keyframes shine{0%,60%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+@keyframes pulse{70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes rise{from{opacity:0;transform:translateY(22px) scale(.95)}}
+@keyframes land{0%{transform:scale(.86);box-shadow:0 0 0 0 color-mix(in srgb,var(--cc) 60%,transparent)}55%{transform:scale(1.05)}100%{transform:scale(1);box-shadow:0 0 0 16px transparent}}
+@keyframes shimmer{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+@keyframes grow{from{width:0}}
+@keyframes dlgIn{from{opacity:0;transform:translateY(18px) scale(.95)}}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{0%{transform:scale(.95);background:#cfe9d2}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}#embers{display:none}}
