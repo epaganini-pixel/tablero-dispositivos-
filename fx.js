@@ -11,12 +11,12 @@
     const host = document.querySelector('dialog[open]') || document.body;
     for (let i = 0; i < n; i++) {
       const el = document.createElement('i'), c = opt.colors ? opt.colors[i % opt.colors.length] : color;
-      const s = opt.confetti ? 6 + Math.random() * 6 : 3 + Math.random() * 4;
+      const s = opt.confetti ? 4 + Math.random() * 3 : 2 + Math.random() * 2.5;
       el.className = 'spark';
-      el.style.cssText = `left:${x}px;top:${y}px;width:${s}px;height:${opt.confetti ? s * 1.6 : s}px;background:${c};border-radius:${opt.confetti ? '2px' : '50%'};box-shadow:${opt.confetti ? 'none' : '0 0 6px ' + c}`;
+      el.style.cssText = `left:${x}px;top:${y}px;width:${s}px;height:${opt.confetti ? s * 1.6 : s}px;background:${c};border-radius:${opt.confetti ? '2px' : '50%'};box-shadow:${opt.confetti ? 'none' : '0 0 3px ' + c}`;
       host.appendChild(el);
-      const a = Math.random() * Math.PI * 2, v = (opt.confetti ? 90 : 50) + Math.random() * (opt.confetti ? 160 : 90);
-      const dx = Math.cos(a) * v, dy = Math.sin(a) * v - (opt.confetti ? 60 : 20), fall = (opt.confetti ? 140 : 40) + Math.random() * 60;
+      const a = Math.random() * Math.PI * 2, v = (opt.confetti ? 60 : 35) + Math.random() * (opt.confetti ? 110 : 55);
+      const dx = Math.cos(a) * v, dy = Math.sin(a) * v - (opt.confetti ? 40 : 12), fall = (opt.confetti ? 90 : 25) + Math.random() * 40;
       el.animate([
         { transform: 'translate(-50%,-50%) rotate(0)', opacity: 1 },
         { transform: `translate(calc(-50% + ${dx * .7}px),calc(-50% + ${dy}px)) rotate(${Math.random() * 360}deg)`, opacity: 1, offset: .45 },
@@ -29,7 +29,7 @@
   board.addEventListener('drop', e => {
     const col = e.target.closest('.col'); if (!col) return;
     const fin = col.classList.contains('c4');
-    burst(e.clientX, e.clientY, getComputedStyle(col).getPropertyValue('--cc').trim(), fin ? 42 : 16, fin ? { confetti: true, colors: PALETA } : {});
+    burst(e.clientX, e.clientY, getComputedStyle(col).getPropertyValue('--cc').trim(), fin ? 24 : 9, fin ? { confetti: true, colors: PALETA } : {});
   }, true);
   board.addEventListener('dragstart', () => document.body.classList.add('dragging'));
   board.addEventListener('dragend', () => document.body.classList.remove('dragging'));
@@ -50,8 +50,8 @@
   board.addEventListener('mousemove', e => {
     const c = e.target.closest('.card'); if (!c || reduce || document.body.classList.contains('dragging')) return;
     const r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-    c.style.setProperty('--ry', ((px - .5) * 8).toFixed(2) + 'deg');
-    c.style.setProperty('--rx', ((.5 - py) * 8).toFixed(2) + 'deg');
+    c.style.setProperty('--ry', ((px - .5) * 4).toFixed(2) + 'deg');
+    c.style.setProperty('--rx', ((.5 - py) * 4).toFixed(2) + 'deg');
     c.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
     c.style.setProperty('--my', (py * 100).toFixed(1) + '%');
   });
@@ -67,8 +67,8 @@
     const id = e.target.closest('.pz')?.dataset.p, r = e.target.getBoundingClientRect(), was = allOk();
     setTimeout(() => {
       const row = id && det.querySelector(`.pz[data-p="${id}"]`);
-      if (row && row.classList.contains('ok') && act !== 'cant') { row.classList.add('pop'); burst(r.left + r.width / 2, r.top + r.height / 2, '#6ea675', 14); }
-      if (!was && allOk()) { const b = det.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + 90, '', 46, { confetti: true, colors: PALETA }); }
+      if (row && row.classList.contains('ok') && act !== 'cant') { row.classList.add('pop'); burst(r.left + r.width / 2, r.top + r.height / 2, '#6ea675', 8); }
+      if (!was && allOk()) { const b = det.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + 90, '', 26, { confetti: true, colors: PALETA }); }
     }, 60);
   }, true);
 
@@ -83,8 +83,8 @@
   const resize = () => { const d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
   resize(); addEventListener('resize', resize);
   addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
-  const mk = init => ({ x: Math.random() * W, y: init ? Math.random() * H : H + 20, s: 6 + Math.random() * 16, vy: .15 + Math.random() * .45, ph: Math.random() * 6.28, a: .2 + Math.random() * .4 });
-  const ps = Array.from({ length: Math.round(Math.min(60, W * H / 30000)) }, () => mk(true));
+  const mk = init => ({ x: Math.random() * W, y: init ? Math.random() * H : H + 20, s: 4 + Math.random() * 8, vy: .15 + Math.random() * .45, ph: Math.random() * 6.28, a: .12 + Math.random() * .25 });
+  const ps = Array.from({ length: Math.round(Math.min(36, W * H / 50000)) }, () => mk(true));
   let t = 0, run = true;
   document.addEventListener('visibilitychange', () => { run = !document.hidden; if (run) loop(); });
   function loop() {
