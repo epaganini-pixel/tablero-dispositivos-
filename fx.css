@@ -1,5 +1,5 @@
 /* ===== Efectos y movimiento (se puede quitar sacando fx.css y fx.js del index.html) ===== */
-body{background:radial-gradient(900px 520px at 88% -8%,rgba(255,175,15,.24),transparent 62%),radial-gradient(800px 600px at -8% 108%,rgba(86,120,163,.17),transparent 60%),var(--bg);background-attachment:fixed}
+body{background:radial-gradient(900px 520px at 88% -8%,rgba(255,175,15,.14),transparent 62%),radial-gradient(800px 600px at -8% 108%,rgba(86,120,163,.1),transparent 60%),var(--bg);background-attachment:fixed}
 #embers{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .wrap{position:relative;z-index:1}
 .spark{position:fixed;pointer-events:none;z-index:9999}
@@ -15,24 +15,24 @@ button{transition:transform .15s,box-shadow .2s,background .2s,border-color .2s,
 button:active{transform:scale(.95)}
 button.primary{position:relative;overflow:hidden}
 button.primary::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%)}
-button.primary:hover{box-shadow:0 6px 18px rgba(255,175,15,.45)}
+button.primary:hover{box-shadow:0 3px 8px rgba(255,175,15,.3)}
 button.primary:hover::after{transform:translateX(120%);transition:transform .6s}
 .chips button:hover{transform:translateY(-2px)}
-.chips button.on{box-shadow:0 4px 12px rgba(44,42,38,.25)}
+
 
 /* columnas */
-.col{background:rgba(255,255,255,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-color:rgba(255,255,255,.85);box-shadow:0 8px 30px rgba(40,35,25,.06);transition:box-shadow .25s,background .25s}
+.col{background:rgba(255,255,255,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-color:rgba(255,255,255,.85);box-shadow:0 2px 10px rgba(40,35,25,.04);transition:box-shadow .25s,background .25s}
 .col>header{border-bottom-color:rgba(0,0,0,.05)}
 .dot{box-shadow:0 0 0 0 color-mix(in srgb,var(--cc) 55%,transparent);animation:pulse 2.6s infinite}
 body.dragging .col{outline:2px dashed color-mix(in srgb,var(--cc) 45%,transparent);outline-offset:-5px}
-.col.over{background:color-mix(in srgb,var(--cc) 14%,#fff);box-shadow:0 0 0 2px var(--cc),0 16px 40px color-mix(in srgb,var(--cc) 30%,transparent);outline:none}
+.col.over{background:color-mix(in srgb,var(--cc) 14%,#fff);box-shadow:0 0 0 1.5px var(--cc);outline:none}
 
 /* tarjetas */
-.card{transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ly,0px));transition:transform .15s ease-out,box-shadow .3s}
-.card:hover{--ly:-5px;box-shadow:0 14px 30px color-mix(in srgb,var(--cc) 28%,transparent),0 2px 6px rgba(40,35,25,.08)}
-.card::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,175,15,.16),transparent 60%)}
+.card{transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ly,0px));box-shadow:0 1px 2px rgba(40,35,25,.06);transition:transform .15s ease-out,box-shadow .3s}
+.card:hover{--ly:-3px;box-shadow:0 6px 14px rgba(40,35,25,.08)}
+.card::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,175,15,.07),transparent 60%)}
 .card:hover::after{opacity:1}
-.card.dragging{transform:rotate(2deg) scale(1.03);opacity:.5}
+.card.dragging{transform:rotate(1deg) scale(1.02);opacity:.5}
 .card.enter{animation:rise .6s cubic-bezier(.2,.8,.3,1) backwards;animation-delay:calc(var(--i,0)*60ms)}
 .card.land{animation:land .6s cubic-bezier(.3,1.5,.5,1)}
 
@@ -49,14 +49,18 @@ dialog::backdrop{background:rgba(44,42,38,.4);backdrop-filter:blur(4px);-webkit-
 .pz.pop{animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
 
 @keyframes slide{to{background-position:-200% 0}}
-@keyframes float{50%{transform:translateY(-3px)}}
+@keyframes float{50%{transform:translateY(-1.5px)}}
 @keyframes shine{0%,60%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
-@keyframes pulse{70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes pulse{70%{box-shadow:0 0 0 5px transparent}100%{box-shadow:0 0 0 0 transparent}}
 @keyframes rise{from{opacity:0;transform:translateY(22px) scale(.95)}}
-@keyframes land{0%{transform:scale(.86);box-shadow:0 0 0 0 color-mix(in srgb,var(--cc) 60%,transparent)}55%{transform:scale(1.05)}100%{transform:scale(1);box-shadow:0 0 0 16px transparent}}
+@keyframes land{0%{transform:scale(.94);box-shadow:0 0 0 0 color-mix(in srgb,var(--cc) 45%,transparent)}55%{transform:scale(1.02)}100%{transform:scale(1);box-shadow:0 0 0 7px transparent}}
 @keyframes shimmer{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
 @keyframes grow{from{width:0}}
 @keyframes dlgIn{from{opacity:0;transform:translateY(18px) scale(.95)}}
 @keyframes fade{from{opacity:0}}
 @keyframes pop{0%{transform:scale(.95);background:#cfe9d2}100%{transform:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}#embers{display:none}}
+
+/* sombras más sutiles */
+.logo-badge{box-shadow:0 1px 3px rgba(40,35,25,.12)}
+dialog{box-shadow:0 8px 24px rgba(40,35,25,.12)}
