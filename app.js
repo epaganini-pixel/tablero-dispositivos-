@@ -85,7 +85,7 @@ const Board = {
     $('#board').innerHTML = ESTADOS.map((e, i) => {
       const list = devices.filter(d => d.estado === e && this.visible(d));
       return `<section class="col c${i}" data-estado="${e}">
-        <header><h2><span class="dot"></span>${e}</h2><span class="col-count">${list.length} dispositivo${list.length === 1 ? '' : 's'}</span></header>
+        <header title="Ver ${e} en carrusel"><h2><span class="dot"></span>${e}</h2><div class="hr"><span class="col-count">${list.length} dispositivo${list.length === 1 ? '' : 's'}</span><button type="button" class="expand" aria-label="Ver ${e} en carrusel">⤢</button></div></header>
         <div class="cards">${list.map(this.card).join('') || '<p class="empty">Sin dispositivos</p>'}</div>
         <button class="add" data-add="${e}">+ Agregar tarjeta</button>
       </section>`;
